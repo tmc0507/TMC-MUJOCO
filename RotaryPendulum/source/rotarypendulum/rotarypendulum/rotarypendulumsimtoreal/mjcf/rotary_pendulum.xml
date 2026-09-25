@@ -1,0 +1,24 @@
+<mujoco model="rotary_pendulum">
+  <compiler angle="radian" inertiafromgeom="false"/>
+  <option timestep="0.0033333333333333335" integrator="implicitfast" gravity="0 0 -9.81"/>
+  <worldbody>
+    <body name="base_link" pos="0 0 0">
+      <geom type="cylinder" size="0.04 0.0525" pos="0 0 0.0525" rgba="0.3 0.3 0.3 1" contype="0" conaffinity="0"/>
+      <body name="cart_link" pos="0 0 0.105">
+        <!-- USD localRot0 rotates the default X revolute axis onto world -Z. -->
+        <joint name="Revolute_1" type="hinge" axis="0 0 -1" limited="true" range="-2.3561944902 2.3561944902" damping="0"/>
+        <inertial pos="0 -0.0425 0.020919" mass="0.095" diaginertia="5.719791667e-5 5.9918115e-6 5.719791667e-5"/>
+        <geom type="capsule" fromto="0 0 0.020919 0 -0.085 0.020919" size="0.006" rgba="0.2 0.4 0.8 1" contype="0" conaffinity="0"/>
+        <body name="pendulum" pos="0 -0.085 0.020919">
+          <joint name="Revolute_2" type="hinge" axis="0 1 0" limited="false" damping="0.0005"/>
+          <inertial pos="0.0005873690229 -0.04119438673 -0.04962789034" quat="0.9999824 0.00035093236 -0.005917526 0.0000025742947" mass="0.024" diaginertia="3.3282e-5 3.3282e-5 1.103649387e-6"/>
+          <geom type="capsule" fromto="0 0 0 0 0 -0.129" size="0.003" rgba="0.9 0.2 0.2 1" contype="0" conaffinity="0"/>
+          <site name="pendulum_tip" pos="0 0 -0.129" size="0.004"/>
+        </body>
+      </body>
+    </body>
+  </worldbody>
+  <actuator>
+    <velocity name="arm_velocity" joint="Revolute_1" kv="2" forcerange="-3 3" ctrllimited="false"/>
+  </actuator>
+</mujoco>
